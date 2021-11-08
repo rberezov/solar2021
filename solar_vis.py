@@ -19,9 +19,7 @@ window_height = 800
 
 scale_factor = 1
 """Масштабирование экранных координат по отношению к физическим.
-
 Тип: float
-
 Мера: количество пикселей на один метр."""
 
 
@@ -37,9 +35,7 @@ def scale_x(x):
     Принимает вещественное число, возвращает целое число.
     В случае выхода **x** координаты за пределы экрана возвращает
     координату, лежащую за пределами холста.
-
     Параметры:
-
     **x** — x-координата модели.
     """
 
@@ -52,9 +48,7 @@ def scale_y(y):
     В случае выхода **y** координаты за пределы экрана возвращает
     координату, лежащую за пределами холста.
     Направление оси развёрнуто, чтобы у модели ось **y** смотрела вверх.
-
     Параметры:
-
     **y** — y-координата модели.
     """
     return int(y*scale_factor) + window_height//2
@@ -85,4 +79,4 @@ class DrawableObject:
         self.obj = obj
 
     def draw(self, surface):
-        pg.draw.circle(surface, self.obj.color, (self.obj.x, self.obj.y), self.obj.R)
+        pg.draw.circle(surface, self.obj.color, (scale_x(self.obj.x), scale_x(self.obj.y)), self.obj.R)
