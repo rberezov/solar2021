@@ -85,10 +85,6 @@ def write_space_objects_data_to_file(output_filename, space_objects):
         for obj in space_objects:
             print(out_file, "%s %d %s %f %f %f %f %f" % (space_objects.type.title(), space_objects.R, space_objects.color, space_objects.m, space_objects.x, space_objects.y, space_objects.Vx, space_objects.Vy))
 
-def write_satellite_to_file(output_filename, planet, star):
-    with open(output_filename, 'w') as out_file:
-        print(out_file, "%s %f %s %f %s %f %s %f" % ("x: ", planet.x, "y: ", planet.y, "distance to star: ", distance_satellite(star, planet), "speed: ", speed(planet)))
-
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
