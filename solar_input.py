@@ -3,6 +3,7 @@
 
 from solar_objects import Star, Planet
 from solar_vis import DrawableObject
+import solar_model
 
 def read_space_objects_data_from_file(input_filename):
     """Cчитывает данные о космических объектах из файла, создаёт сами объекты
@@ -81,10 +82,15 @@ def write_space_objects_data_to_file(output_filename, space_objects):
     **output_filename** — имя входного файла
     **space_objects** — список объектов планет и звёзд
     """
-    with open(output_filename, 'w') as out_file:
+    with open(output_filename, 'a') as out_file:
         for obj in space_objects:
-            print(out_file, "%s %d %s %f %f %f %f %f" % (space_objects.type.title(), space_objects.R, space_objects.color, space_objects.m, space_objects.x, space_objects.y, space_objects.Vx, space_objects.Vy))
+            print("%s %d %s %f %f %f %f %f" % (obj.type.title(), obj.R, obj.color, obj.m, obj.x, obj.y, obj.Vx, obj.Vy), file = out_file)
 
+def write_satellite_to_file(output_filename, space_objects):
+    with open(output_filename, 'a') as out_file:
+        for obj in space_objects:
+            if(obj.type == "planet"):
+                print( "%s %f %s %f %s %f %s %f" % ("x: ", obj.x, "y: ", obj.y, "distance to star: ", solar_model.distance_satellite(space_objects[0], obj), "speed: ", solar_model.speed(obj)), file = out_file)
 
 if __name__ == "__main__":
     print("This module is not for direct call!")

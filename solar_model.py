@@ -6,6 +6,11 @@ import solar_vis
 gravitational_constant = 6.67408E-11
 """Гравитационная постоянная Ньютона G"""
 
+def distance_satellite(star, planet):
+    return sqrt((star.x - planet.x) ** 2 + (star.y - planet.y) ** 2)
+
+def speed(planet):
+    return sqrt(planet.Vx ** 2 + planet.Vy ** 2)
 
 def calculate_force(body, space_objects):
     """Вычисляет силу, действующую на тело.
@@ -60,6 +65,7 @@ def recalculate_space_objects_positions(space_objects, dt):
 
     **dt** — шаг по времени
     """
+
     for body in space_objects:
         calculate_force(body, space_objects)
     for body in space_objects:
