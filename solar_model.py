@@ -1,4 +1,5 @@
-# coding: utf-8
+from math import sqrt
+#coding: utf-8
 # license: GPLv3
 
 gravitational_constant = 6.67408E-11
@@ -17,16 +18,17 @@ def calculate_force(body, space_objects):
 
     body.Fx = body.Fy = 0
     for obj in space_objects:
-        if body == obj:
-            continue  # тело не действует гравитационной силой на само себя!
-        r = ((body.x - obj.x)**2 + (body.y - obj.y)**2)**0.5
-        if r <= (body.R + obj.R) * 1.1:
-            if body.r > obj.r:
-                space_objects.remove(obj)
-            else:
-                space_objects.remove(body)
-        body.Fx += (obj.x - body.x) * gravitational_constant * obj.m * body.m / (r ** 3)
-        body.Fy += (obj.y - body.y) * gravitational_constant * obj.m * body.m / (r ** 3)
+        r = sqrt((body.x - obj.x)**2 + (body.y - obj.y)**2)
+        if body != obj:
+            body.Fx += (obj.x - body.x) * gravitational_constant * obj.m * body.m / (r ** 3)
+            body.Fy += (obj.y - body.y) * gravitational_constant * obj.m * body.m / (r ** 3)
+            if r < body.R + obj.R:
+                if body.R > obj.R:
+                    obj.R = 0
+                    obj.m = 0
+                else:
+                    body.R = 0
+                    body.m = 0
 
 def move_space_object(body, dt):
     """Перемещает тело в соответствии с действующей на него силой.
